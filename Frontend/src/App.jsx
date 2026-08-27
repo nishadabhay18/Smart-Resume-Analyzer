@@ -11,7 +11,7 @@ function App() {
       <InterviewProvider>
         <RouterProvider router={router} />
         <ToastContainer
-          className='text-red-400 bg-black/90'
+          className='text-red-400 bg-black/85'
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
