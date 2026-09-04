@@ -32,7 +32,7 @@ const Register = () => {
     return (
         <main>
             <div className='flex items-center justify-center flex-col gap-3 '>
-                <div className="w-full back  rounded-sm flex justify-start">
+                <div className="w-full back cursor-pointer rounded-sm flex justify-start">
                     <RiArrowLeftLongLine className=' border-slate-300 px-2 rounded-sm h-7 w-9 hover:bg-red-500 ' onClick={() => navigate('/start')} />
                 </div>
                 <div className="form-container">

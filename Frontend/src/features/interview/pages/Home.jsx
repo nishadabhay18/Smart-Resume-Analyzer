@@ -42,6 +42,7 @@ const Home = () => {
 
             <nav className='top'>
                 <div className='logo'>Resume Analyzer</div>
+                <div className='recent cursor-pointer' onClick={()=> navigate('/recent')}>Recent Plans</div>
                 <button className='button' onClick={logoutUser}>Logout</button>
             </nav>
 
