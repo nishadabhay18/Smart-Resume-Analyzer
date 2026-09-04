@@ -6,7 +6,11 @@ const Protected = ({ children }) => {
     const { loading, user } = useAuth()
 
     if (loading) {
-        return (<main><h1>Loading...</h1></main>)
+        return (
+            <main className="flex h-screen items-center justify-center">
+                <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-black"></div>
+            </main>
+        )
     }
 
     if (!user) {
