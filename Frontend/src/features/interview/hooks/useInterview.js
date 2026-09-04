@@ -1,4 +1,4 @@
-import { getAllInterviewReports, generateInterviewReport, getInterviewReportById, generateResumePdf } from "../services/interview.api"
+import { getAllInterviewReports, generateInterviewReport, getInterviewReportById, generateResumePdf, deleteInterviewReport } from "../services/interview.api"
 import { useContext, useEffect } from "react"
 import { InterviewContext } from "../interview.context"
 import { useParams } from "react-router"
@@ -64,7 +64,7 @@ export const useInterview = () => {
         let response = null
         try {
             response = await generateResumePdf({ interviewReportId })
-            const url = window.URL.createObjectURL(new Blob([ response ], { type: "application/pdf" }))
+            const url = window.URL.createObjectURL(new Blob([response], { type: "application/pdf" }))
             const link = document.createElement("a")
             link.href = url
             link.setAttribute("download", `resume_${interviewReportId}.pdf`)
@@ -78,15 +78,30 @@ export const useInterview = () => {
         }
     }
 
+    // DELETE INTERVIEW REPORT 
+    const deleteReport = async (interviewReportId) => {
+        setLoading(true)
+        try {
+            await deleteInterviewReport(interviewReportId)
+            // Remove deleted report from UI immediately 
+            setReports(prevReports => prevReports.filter(report => report._id !== interviewReportId))
+        } catch (error) {
+            console.log(error)
+
+        } finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         if (interviewId) {
             getReportById(interviewId)
         } else {
             getReports()
         }
-    }, [ interviewId ])
+    }, [interviewId])
 
-    return { loading, report, reports, generateReport, getReportById, getReports, getResumePdf }
+    return { loading, report, reports, generateReport, getReportById, getReports, getResumePdf, deleteReport }
 
 }
 

@@ -23,8 +23,8 @@ const Home = () => {
 
     if (loading) {
         return (
-            <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
+            <main className="flex h-screen items-center justify-center ">
+                <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-black"></div>
             </main>
         )
     }
@@ -140,7 +140,7 @@ const Home = () => {
             </div>
 
             {/* Recent Reports List */}
-            {reports.length > 0 && (
+            {/* {reports.length > 0 && (
                 <section className='recent-reports'>
                     <h2>My Recent Interview Plans</h2>
                     <ul className='reports-list'>
@@ -153,7 +153,7 @@ const Home = () => {
                         ))}
                     </ul>
                 </section>
-            )}
+            )} */}
 
             {/* Page Footer */}
             <footer className='page-footer'>
