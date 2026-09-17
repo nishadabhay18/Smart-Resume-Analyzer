@@ -1,3 +1,73 @@
+// import axios from "axios"
+
+// const api = axios.create({
+//     baseURL: "http://localhost:3000",
+//     withCredentials: true
+// })
+
+// export async function register({ username, email, password }) {
+
+//     try {
+//         const response = await axios.post('http://localhost:3000/api/auth/register', {
+//             username, email, password
+//         }, { withCredentials: true })
+
+//         return response.data
+
+//     } catch (err) {
+
+//         console.log("Error in posting response from backend", err)
+//         throw err
+
+//     }
+
+// }
+
+// export async function login({ email, password }) {
+
+//     try {
+
+//         const response = await api.post("/api/auth/login", {
+//             email, password
+//         })
+
+//         return response.data
+
+//     } catch (err) {
+//         console.log("Error in fetching response from backend", err)
+//         throw err
+//     }
+
+// }
+
+// export async function logout() {
+//     try {
+
+//         const response = await api.get("/api/auth/logout")
+
+//         return response.data
+
+//     } catch (err) {
+//         console.log("Error in fetching response from backend", err)
+//     }
+// }
+
+// export async function getMe() {
+
+//     try {
+
+//         const response = await api.get("/api/auth/get-me")
+
+//         return response.data
+
+//     } catch (err) {
+//         console.log("Error in fetching response from backend", err)
+//     }
+
+// }
+
+
+
 import axios from "axios"
 
 const api = axios.create({
@@ -6,27 +76,21 @@ const api = axios.create({
 })
 
 export async function register({ username, email, password }) {
-
     try {
-        const response = await axios.post('http://localhost:3000/api/auth/register', {
+        const response = await api.post("/api/auth/register", {
             username, email, password
-        }, { withCredentials: true })
+        })
 
         return response.data
 
     } catch (err) {
-
-        console.log("Error in posting response from backend", err)
+        console.log("Error in register:", err)
         throw err
-
     }
-
 }
 
 export async function login({ email, password }) {
-
     try {
-
         const response = await api.post("/api/auth/login", {
             email, password
         })
@@ -34,34 +98,49 @@ export async function login({ email, password }) {
         return response.data
 
     } catch (err) {
-        console.log("Error in fetching response from backend", err)
+        console.log("Error in login:", err)
         throw err
     }
-
 }
 
 export async function logout() {
     try {
-
         const response = await api.get("/api/auth/logout")
 
         return response.data
 
     } catch (err) {
-        console.log("Error in fetching response from backend", err)
+        console.log("Error in logout:", err)
+        throw err
     }
 }
 
 export async function getMe() {
-
     try {
-
         const response = await api.get("/api/auth/get-me")
-
         return response.data
-
     } catch (err) {
-        console.log("Error in fetching response from backend", err)
+        console.log("Error in getMe:", err)
+        throw err
     }
-
 }
+
+
+// export async function getMe() {
+//     try {
+//         const response = await axios.get(
+//             `${import.meta.env.VITE_SERVER_URL}/api/auth/get-me`,
+//             {
+//                 withCredentials: true
+//             }
+//         )
+
+//         return response.data
+//     } catch (error) {
+//         console.error("Error in getMe:", error)
+//         throw error
+//     }
+// }
+
+
+

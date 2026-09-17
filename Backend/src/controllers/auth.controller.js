@@ -44,7 +44,7 @@ async function registerUserController(req, res) {
         const hash = await bcrypt.hash(password, 10)
 
         const user = await userModel.create({
-            username, 
+            username,
             email,
             password: hash
         })
@@ -87,6 +87,65 @@ async function registerUserController(req, res) {
  * @access Public
  */
 
+// async function loginUserController(req, res) {
+//     try {
+//         let { email, password } = req.body
+
+//         if (!email || !password) {
+//             return res.status(400).json({
+//                 message: "Please provide email and password"
+//             })
+//         }
+
+//         email = email.toLowerCase().trim()
+
+//         const user = await userModel.findOne({ email })
+
+//         if (!user) {
+//             return res.status(400).json({
+//                 message: "Invalid email or password"
+//             })
+//         }
+
+//         const isPasswordValid = await bcrypt.compare(password, user.password)
+
+//         if (!isPasswordValid) {
+//             return res.status(400).json({
+//                 message: "Invalid email or password"
+//             })
+//         }
+
+//         if (!process.env.JWT_SECRET) {
+//             throw new Error("JWT_SECRET not defined")
+//         }
+
+//         const token = jwt.sign(
+//             { id: user._id, username: user.username },
+//             process.env.JWT_SECRET,
+//             { expiresIn: "1d" }
+//         )
+
+//         // 🔹 Simple cookie 
+//         res.cookie("token", token)
+
+//         return res.status(200).json({
+//             message: "User loggedIn successfully.",
+//             user: {
+//                 id: user._id,
+//                 username: user.username,
+//                 email: user.email
+//             }
+//         })
+
+//     } catch (error) {
+//         console.error("Login Error:", error)
+//         return res.status(500).json({
+//             message: "Internal Server Error"
+//         })
+//     }
+// }
+
+
 async function loginUserController(req, res) {
     try {
         let { email, password } = req.body
@@ -115,18 +174,22 @@ async function loginUserController(req, res) {
             })
         }
 
-        if (!process.env.JWT_SECRET) {
-            throw new Error("JWT_SECRET not defined")
-        }
-
         const token = jwt.sign(
-            { id: user._id, username: user.username },
+            {
+                id: user._id,
+                username: user.username
+            },
             process.env.JWT_SECRET,
-            { expiresIn: "1d" }
+            {
+                expiresIn: "1d"
+            }
         )
 
-        // 🔹 Simple cookie 
-        res.cookie("token", token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false
+        })
 
         return res.status(200).json({
             message: "User loggedIn successfully.",
@@ -139,11 +202,13 @@ async function loginUserController(req, res) {
 
     } catch (error) {
         console.error("Login Error:", error)
+
         return res.status(500).json({
             message: "Internal Server Error"
         })
     }
 }
+
 
 
 /**
